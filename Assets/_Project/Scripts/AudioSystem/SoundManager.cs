@@ -18,7 +18,7 @@ namespace AudioSystem {
             InitializePool();
         }
 
-        public SoundBuilder CreateSound() => new SoundBuilder(this);
+        public SoundBuilder CreateSoundBuilder() => new SoundBuilder(this);
 
         public bool CanPlaySound(SoundData data) {
             if (!data.frequentSound) return true;

@@ -13,11 +13,13 @@ Take control of the sounds in your game by pooling your Audio Sources! Reduce th
 ```csharp
 [SerializeField] SoundData soundData;
 
-SoundManager.Instance.CreateSound()
-    .WithSoundData(soundData)
+// Cache SoundBuilder for performance
+SoundBuilder soundBuilder = SoundManager.Instance.CreateSoundBuilder();
+
+soundBuilder
     .WithRandomPitch()
     .WithPosition(transform.position)
-    .Play();
+    .Play(soundData);
 }
 ```
 
