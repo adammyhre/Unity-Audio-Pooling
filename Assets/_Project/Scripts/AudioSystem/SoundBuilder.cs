@@ -36,9 +36,9 @@ namespace AudioSystem {
             if (randomPitch) {
                 soundEmitter.WithRandomPitch();
             }
-            
+
             if (soundData.frequentSound) {
-                soundManager.FrequentSoundEmitters.Enqueue(soundEmitter);
+                soundEmitter.Node = soundManager.FrequentSoundEmitters.AddLast(soundEmitter);
             }
             
             soundEmitter.Play();

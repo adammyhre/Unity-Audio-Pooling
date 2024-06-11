@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -6,6 +7,8 @@ namespace AudioSystem {
     [RequireComponent(typeof(AudioSource))]
     public class SoundEmitter : MonoBehaviour {
         public SoundData Data { get; private set; }
+        public LinkedListNode<SoundEmitter> Node { get; set; }
+
         AudioSource audioSource;
         Coroutine playingCoroutine;
 

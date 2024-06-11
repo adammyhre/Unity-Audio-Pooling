@@ -6,7 +6,7 @@ namespace AudioSystem {
     public class SoundManager : PersistentSingleton<SoundManager> {
         IObjectPool<SoundEmitter> soundEmitterPool;
         readonly List<SoundEmitter> activeSoundEmitters = new();
-        public readonly Queue<SoundEmitter> FrequentSoundEmitters = new();
+        public readonly LinkedList<SoundEmitter> FrequentSoundEmitters = new();
 
         [SerializeField] SoundEmitter soundEmitterPrefab;
         [SerializeField] bool collectionCheck = true;
@@ -23,9 +23,9 @@ namespace AudioSystem {
         public bool CanPlaySound(SoundData data) {
             if (!data.frequentSound) return true;
 
-            if (FrequentSoundEmitters.Count >= maxSoundInstances && FrequentSoundEmitters.TryDequeue(out var soundEmitter)) {
+            if (FrequentSoundEmitters.Count >= maxSoundInstances) {
                 try {
-                    soundEmitter.Stop();
+                    FrequentSoundEmitters.First.Value.Stop();
                     return true;
                 } catch {
                     Debug.Log("SoundEmitter is already released");
@@ -74,6 +74,10 @@ namespace AudioSystem {
         }
 
         void OnReturnedToPool(SoundEmitter soundEmitter) {
+            if (soundEmitter.Node != null) {
+                FrequentSoundEmitters.Remove(soundEmitter.Node);
+                soundEmitter.Node = null;
+            }
             soundEmitter.gameObject.SetActive(false);
             activeSoundEmitters.Remove(soundEmitter);
         }
