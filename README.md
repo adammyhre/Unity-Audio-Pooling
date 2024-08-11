@@ -25,6 +25,6 @@ soundBuilder
 
 ## YouTube
 
-- [Game Audio Optimization in Unity](#)
+- [Game Audio Optimization in Unity](https://youtu.be/BgpqoRFCNOs)
 
 You can also check out my [YouTube channel](https://www.youtube.com/@git-amend?sub_confirmation=1) for more Unity content.
