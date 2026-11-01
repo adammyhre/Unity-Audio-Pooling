@@ -44,9 +44,9 @@ namespace AudioSystem {
         }
 
         public void StopAll() {
-			var tempList = activeSoundEmitters.ToArray();
+			var emittersToStop = activeSoundEmitters.ToArray();
 
-			foreach (var soundEmitter in tempList)
+			foreach (var soundEmitter in emittersToStop)
             {
                 soundEmitter.Stop();
             }
