@@ -9,6 +9,14 @@ namespace AudioSystem {
         public SoundData Data { get; private set; }
         public LinkedListNode<SoundEmitter> Node { get; set; }
 
+        bool IsAppPaused => !Application.runInBackground && !IsFocused;
+
+#if UNITY_EDITOR
+        bool IsFocused => UnityEditorInternal.InternalEditorUtility.isApplicationActive;
+#else
+        bool IsFocused => Application.isFocused;
+#endif
+
         AudioSource audioSource;
         Coroutine playingCoroutine;
 
@@ -56,7 +64,7 @@ namespace AudioSystem {
         }
 
         IEnumerator WaitForSoundToEnd() {
-            yield return new WaitWhile(() => audioSource.isPlaying);
+            yield return new WaitWhile(() => audioSource.isPlaying || audioSource.loop || IsAppPaused);
             Stop();
         }
 
