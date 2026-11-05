@@ -9,7 +9,13 @@ namespace AudioSystem {
         public SoundData Data { get; private set; }
         public LinkedListNode<SoundEmitter> Node { get; set; }
 
-        bool IsAppPaused => !Application.isFocused && !Application.runInBackground;
+        bool IsAppPaused => !Application.runInBackground && !IsFocused;
+
+#if UNITY_EDITOR
+        bool IsFocused => UnityEditorInternal.InternalEditorUtility.isApplicationActive;
+#else
+        bool IsFocused => Application.isFocused;
+#endif
 
         AudioSource audioSource;
         Coroutine playingCoroutine;
